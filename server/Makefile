@@ -1,10 +1,10 @@
 CC = gcc
-CC_FLAGS = -I./headers
+CC_FLAGS = -I ./headers -I ../common/headers
 #CFLAGS = -Wall -g
 
-SOURCES = $(wildcard ./src/*.c)
+SOURCES = $(wildcard ./src/*.c ../common/src/*.c)
 OBJECTS = $(SOURCES:.c=.o)
-DEPS = $(wildcard ./headers/*.h)
+DEPS = $(wildcard ./headers/*.h ../common/headers/*.h)
 EXEC = server
 LIBS = -lpthread
 
