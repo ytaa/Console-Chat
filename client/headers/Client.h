@@ -10,6 +10,8 @@
 #include <string.h>
 #include <arpa/inet.h>
 
+#include "LogHandling.h"
+
 #define MAX_MSG_LEN 256
 
 void clientRun(char *serverAddress, unsigned short serverPort);

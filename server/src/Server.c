@@ -5,33 +5,34 @@ int serverSocket = 0;
 
 void serverRun(char *server_address, unsigned short server_port){
 	//server aaddress
+	logAddConfig(LOG_OPTION_WRITE_TO_STDOUT);
 	struct sockaddr_in addr_in;
 	addr_in.sin_family = AF_INET;
 	addr_in.sin_addr.s_addr = inet_addr(server_address);
 	addr_in.sin_port = htons(server_port);
-	printf("\n");
+	logPrint("\n");
 	//fill in server info
 	serverSocket = socket(AF_INET, SOCK_STREAM, 0);
   if(serverSocket == -1){
-		printf("Error 'socket': %m\n");
+		logPrint("Error 'socket': %m\n");
 		serverStop();
     exit(EXIT_FAILURE);
   }
   //setting server to nonblocking
   epollMakeSocketNonBlocking(serverSocket);
   if(bind(serverSocket, (struct sockaddr*)&addr_in, sizeof(addr_in)) < 0){
-		printf("Error 'bind': %m\n");
+		logPrint("Error 'bind': %m\n");
 		serverStop();
     exit(EXIT_FAILURE);
   }
-  printf("Server up\n");
+  logPrint("Server up\n");
   if(listen(serverSocket, 5) == -1){
-	 printf("Error 'listen': %m\n");
+	 logPrint("Error 'listen': %m\n");
 	 serverStop();
    exit(EXIT_FAILURE);
   }
 
-  printf("Listening..\n");
+  logPrint("Listening..\n");
 	serverRunning = true;
 
 	epollInit();
@@ -55,12 +56,12 @@ void serverRun(char *server_address, unsigned short server_port){
 void serverStop(){
 	//serverRunning = false;
   close(serverSocket);
-  printf("------------------------------------------\n");
-  printf("Server down\n");
-	printf("------------------------------------------\n\n");
+  logPrint("------------------------------------------\n");
+  logPrint("Server down\n");
+	logPrint("------------------------------------------\n\n");
 }
 
 void serverActionSigint(int signal){
-  printf("\n");
+  logPrint("\n");
   serverRunning = false;
 }

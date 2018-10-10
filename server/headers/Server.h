@@ -3,6 +3,7 @@
 #include <arpa/inet.h>
 
 #include "EpollHandling.h"
+#include "LogHandling.h"
 
 #define SERVER_MINIMAL_OUTPUT 1
 #define SERVER_ALREADY_EXISTING 2

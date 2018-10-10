@@ -12,17 +12,17 @@ void clientRun(char *serverAddress, unsigned short serverPort){
   serveAddrIn.sin_addr.s_addr = inet_addr(serverAddress);
 	serveAddrIn.sin_port = htons(serverPort);
 	if(connect(serverSocket, (struct sockaddr*)&serveAddrIn, sizeof(serveAddrIn)) != -1) {
-		printf("connected\n");
+		logPrint("connected\n");
     char msgBuffer[MAX_MSG_LEN];
     while(1){
-      printf("write your message: ");
+      logPrint("write your message: ");
       scanf("%[^\n]s", msgBuffer);
       msgBuffer[MAX_MSG_LEN-1]='\0';
       if(strcmp(msgBuffer, "exit")==0){
         break;
       }
   		if( write(serverSocket, msgBuffer, strlen(msgBuffer)+1) > 0) {
-  			printf("-> '%s'\n", msgBuffer);
+  			logPrint("-> '%s'\n", msgBuffer);
   		}
       int recCharIndex = 0;
       char recCharBuffer = 0;
@@ -32,11 +32,11 @@ void clientRun(char *serverAddress, unsigned short serverPort){
           break;
         }
       }
-      printf("<- '%s'\n", msgBuffer);
+      logPrint("<- '%s'\n", msgBuffer);
       char cleanup;
       while ((cleanup = getchar()) != '\n' && cleanup != EOF) { }
     }
 	}
-  printf("closing connection\n");
+  logPrint("closing connection\n");
 	close(serverSocket);
 }
