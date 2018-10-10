@@ -19,7 +19,7 @@ void serverRun(char *server_address, unsigned short server_port){
     exit(EXIT_FAILURE);
   }
   //setting server to nonblocking
-  epollMakeSocketNonBlocking(serverSocket);
+  socketMakeNonBlocking(serverSocket);
   if(bind(serverSocket, (struct sockaddr*)&addr_in, sizeof(addr_in)) < 0){
 		logPrint("Error 'bind': %m\n");
 		serverStop();
@@ -35,8 +35,6 @@ void serverRun(char *server_address, unsigned short server_port){
   logPrint("Listening..\n");
 	serverRunning = true;
 
-	epollInit();
-
 	//changing progam action for SIG_INT
 	sigset_t blocking_sig_set;
 	sigemptyset(&blocking_sig_set);
@@ -46,6 +44,7 @@ void serverRun(char *server_address, unsigned short server_port){
 	sig_int_action.sa_flags = 0;
 	sigaction(SIGINT, &sig_int_action, NULL);
 
+	epollInit();
 	epollRun();
 
   serverStop();

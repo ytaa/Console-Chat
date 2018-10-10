@@ -42,28 +42,6 @@ void epollRun(){
   }
 }
 
-int epollMakeSocketNonBlocking (int sfd)
-{
-  int flags, s;
-
-  flags = fcntl (sfd, F_GETFL, 0);
-  if (flags == -1)
-    {
-      logPrint("Error 'fcntl': %m\n");
-      return -1;
-    }
-
-  flags |= O_NONBLOCK;
-  s = fcntl (sfd, F_SETFL, flags);
-  if (s == -1)
-    {
-      logPrint("Error 'fcntl': %m\n");
-      return -1;
-    }
-
-  return 0;
-}
-
 void epollNewConnection(int serverSocket){
   struct sockaddr_in client_address;
   struct epoll_event epollEvent;
@@ -74,7 +52,7 @@ void epollNewConnection(int serverSocket){
       logPrint("Error 'accept': %m\n");
       exit(EXIT_FAILURE);
   }
-  epollMakeSocketNonBlocking(eventSocket);
+  socketMakeNonBlocking(eventSocket);
 
   logPrint("------------------------------------------\n");
   logPrint("OPENING NEW CONNECTION\n");
@@ -108,5 +86,5 @@ void epollIn(int eventSocket){
     }
   }
   logPrint("%d -> '%s'\n", eventSocket, msgBuffer);
-  write(eventSocket, msgBuffer, strlen(msgBuffer)+1);
+  socketWrite(eventSocket, msgBuffer, strlen(msgBuffer)+1);
 }

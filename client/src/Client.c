@@ -1,8 +1,8 @@
 #include "Client.h"
 
 void clientRun(char *serverAddress, unsigned short serverPort){
+	logAddConfig(LOG_OPTION_WRITE_TO_STDOUT);
 	struct sockaddr_in serveAddrIn;
-
 	int serverSocket = socket(AF_INET, SOCK_STREAM, 0);
 	if(serverSocket == -1){
 		perror("socket");

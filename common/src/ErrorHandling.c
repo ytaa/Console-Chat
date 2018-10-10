@@ -16,6 +16,10 @@ void errorFatal(const char *errorPrefix){
   perror(errorPrefix);
   exit(EXIT_FAILURE);
 }
+void errorSet(int newErrorNumber, char *newErrorMessage){
+  errorNumber = newErrorNumber;
+  errorMessage = newErrorMessage;
+}
 void errorReset(){
   errorNumber = ERR_NUM_SUCCESS;
   errorMessage = ERR_MSG_SUCCESS;

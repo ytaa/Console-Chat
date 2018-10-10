@@ -19,6 +19,7 @@
 #include <stdbool.h>
 
 #include "Server.h"
+#include "SocketOperations.h"
 
 #define EPOLL_MAX_EVENTS 10
 #define MAX_MSG_LEN 256
@@ -29,7 +30,6 @@ int epollfd;
 
 void epollInit();
 void epollRun();
-int epollMakeSocketNonBlocking(int sfd);
 void epollNewConnection(int serverSocket);
 void epollCloseConnection(int eventSocket);
 void epollIn(int eventSocket);

@@ -5,6 +5,7 @@
 #include <stdbool.h>
 
 #include "LogHandling.h"
+#include "ErrorHandling.h"
 
 #define ERR_PREFIX "Error: "
 #define ERR_NUM_SUCCESS 0
@@ -15,4 +16,5 @@ extern char *errorMessage;
 
 int errorCheck();
 void errorFatal(const char *);
+void errorSet(int newErrorNumber, char *newErrorMessage);
 void errorReset();
