@@ -5,7 +5,7 @@ CC_FLAGS = -I ./headers -I ../common/headers
 SOURCES = $(wildcard ./src/*.c ../common/src/*.c)
 OBJECTS = $(SOURCES:.c=.o)
 DEPS = $(wildcard ./headers/*.h ../common/headers/*.h)
-EXEC = server
+EXEC = server.out
 LIBS = -lpthread
 
 $(EXEC): $(OBJECTS)
